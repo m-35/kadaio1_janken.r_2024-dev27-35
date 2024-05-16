@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>じゃんけんゲーム rich.ver</title>
+  <link rel="stylesheet" href="./css/reset.css">
+  <link rel="stylesheet" href="./css/style.css">
+  <script src="./js/main.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <header>
+        <div class="title">
+            <h2 class="bg-txt">くそじじいとじゃんけん</h2>
+        </div>
+    </header>      
+
+    <main>
+        <div class="item">
+        <!-- カラム１ おやじの吹き出し画像（切替） -->
+            <img id="mypic" onclick="slideshow()" src="img/pics/01.png" width="290" height="200">
+                <script>
+                    var pics_src = new Array("img/pics/01.png","img/pics/02.png","img/pics/03.png","img/pics/04.png","img/pics/05.png","img/pics/06.png","img/pics/07.png","img/pics/08.png","img/pics/09.png","img/pics/10.png","img/pics/11.png","img/pics/12.png","img/pics/13.png");
+                    
+                    var num = 0;
+                    function slideshow(){
+                        if (num == 12) {
+                            num = 0;
+                            }
+                        else {
+                            num ++;
+                            }
+                        document.getElementById("mypic").src=pics_src[num];
+                    }
+                </script>
+        </div>
+        <!-- カラム２ じゃんけん部分 -->
+        <div class="item">
+            <div class="dealer">
+                <p class ="name">くそじじいの手</p>
+                <p> <img id="jankenpon" src="img/kuso.png" width="200" height="200"></p>
+            </div>
+                <div class="vs">
+                    <p class ="name2">VS</p>
+            </div>
+            <div class="container">
+                <script>
+                    function R_Click(p_janken_r) {
+                        let janken = ['グー','チョキ','パー',];//変数"janken"のリストを作成、中身は「グー0」「チョキ1」「パー2」。
+                        let janken_r = Math.floor( Math.random() * 3);//変数名janlen_rで「0」「1」「2」3パタン整数の乱数を作る。
+                        let p_janken = ['グー','チョキ','パー'];//"プレイヤーのjanken"のリストを作成します。
+                            //勝ち負けの判定機プログラムです
+                            if (janken_r === p_janken_r) {
+                                Result_end = "あいこです";
+                            } else if(p_janken_r === 0 && janken_r === 1) {
+                                Result_end = "あなたの【勝ち】";
+                            }else if(p_janken_r === 1 && janken_r === 2) {
+                                Result_end = "あなたの【勝ち】";
+                            }else if(p_janken_r === 2 && janken_r === 0) {
+                                Result_end = "あなたの【勝ち】";
+                            }else {
+                                Result_end = "あなたの【負け】";
+                            }
+                            // 勝敗結果の表示
+                            document.getElementById("jankenpon").src="jan" + janken_r + ".png";
+                            document.getElementById("Rejan1").innerHTML ="勝負の結果は";
+                            document.getElementById("Rejan2").innerHTML =  Result_end;
+                            document.getElementById("jankenpon2").src="jan" + p_janken_r + ".png";
+                    }
+                </script>
+            </div>
+            <div class="player">
+                <div class ="name">あなた</div>
+                    <p><img id="jankenpon2" src="img/gutspose_man.png" width="200" height="200"></p>
+                    <p class="pushme">ボタンを押してね</p>
+              <!-- プレイヤー側の選択ボタン -->
+                 <button class="btn" onclick="R_Click(0);slideshow();audio()"> グー</button>
+                 <button class="btn" onclick="R_Click(1);slideshow();audio()"> チョキ</button>
+                 <button class="btn" onclick="R_Click(2);slideshow();audio()"> パー</button>
+                 <audio id="btn_audio">
+                    <source src="audio/man_sneezing2.mp3" type="audio/mp3">
+                 </audio>
+                 <script>
+                    function audio() {
+                     document.getElementById('btn_audio').currentTime = 0; //連続クリックに対応
+                     document.getElementById('btn_audio').play(); //クリックしたら音を再生
+                       }
+                 </script>
+            </div>
+        </div>
+        <div class="item">
+            <div id="Rejan1"></div>
+            <div id="Rejan2"></div>
+        </div>
+        <div>
+            <audio src="audio/mejiro.mp3" autoplay loop>
+                あなたのブラウザーは <code>audio</code>要素をサポートしていません。
+            </audio>
+        </div>
+    </main>
+    <footer>
+        <di class="u_title_bg"></di>
+    </footer>
+</body>
+</html>
+
